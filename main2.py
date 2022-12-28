@@ -45,6 +45,37 @@ class modify_database:
         print("++ Update data into table_student successfully")
 
 
+
+
+    #Procedure with INPUT Parameters
+    def procedure_insert_data_into_table_student(self):
+        cur.execute("CREATE PROCEDURE insertStudent @sid int, @name VARCHAR(50), @code_meli int
+                    AS INSERT OR REPLACE INTO student(sid, name, code_meli) VALUES(@sid, @name, @code_meli);")
+        cur.execute("EXEC insertStudent @sid = 200, @name = 'Majid', @code_meli = 9401682915;")
+        con.commit()
+
+
+    #Procedure without Parameters
+    def procedure_display_data_into_table_student(self):
+        cur.execute("CREATE PROCEDURE displayStudent
+                    AS SELECT * FROM student;")
+        cur.execute("EXEC displayStudent;")
+        con.commit()
+
+
+    #Procedure include INPUT and OUTPUT Parameters
+    def procedure_display_max_sid(self):
+        cur.execute("CREATE PROCEDURE maxsid @id int, @n VARCHAR(50) output
+                    AS SELECT @n=name FROM student WHERE sid=@id;")
+        cur.execute("DECLARE @x char(10) EXEC maxsid 100, @x output print @x")
+        con.commit()
+    
+
+
+
+
+
+
 # ---------------------------------------------------------------------------------------
 # create object from class
 db = modify_database()
