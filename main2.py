@@ -29,6 +29,10 @@ class modify_database:
 
     def insert_data_into_table_student(self):
         cur.execute("INSERT OR REPLACE INTO student(sid, name, code_meli) VALUES(100, 'Ali', 1250678912);")
+        cur.execute("INSERT OR REPLACE INTO student(sid, name, code_meli) VALUES(102, 'mohsen', 456625452);")
+        cur.execute("INSERT OR REPLACE INTO student(sid, name, code_meli) VALUES(104, 'sara', 7854521252);")
+        cur.execute("INSERT OR REPLACE INTO student(sid, name, code_meli) VALUES(106, 'reza', 5421000253);")
+
         con.commit()
         print("++ Insert data into table_student successfully")
 
@@ -43,6 +47,23 @@ class modify_database:
         cur.execute("UPDATE student set name = 'Mahdi' WHERE sid = 100;")
         con.commit()
         print("++ Update data into table_student successfully")
+
+    def insert_data_into_student_course(self):
+        cur.execute("INSERT OR REPLACE INTO student_course(sid, cid) VALUES(102,2000);")
+        cur.execute("INSERT OR REPLACE INTO student_course(sid, cid) VALUES(104,3000);")
+        cur.execute("INSERT OR REPLACE INTO student_course(sid, cid) VALUES(104,4000);")
+        cur.execute("INSERT OR REPLACE INTO student_course(sid, cid) VALUES(106,7000);")
+        cur.execute("INSERT OR REPLACE INTO student_course(sid, cid) VALUES(106,5000);")
+        con.commit()
+
+    def display_student_course_data(self):
+        cur.execute("SELECT sid,cid FROM student_course;")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+        print("++ Show student_course successfully")
+
+
 
 
     def insert_data_into_table_course(self):
@@ -79,10 +100,26 @@ class modify_database:
         print("++ Show courses in table_course successfully")
 
 
+    def display_inner_join(self):
+        cur.execute("SELECT student.sid,student.name,student_course.cid FROM student inner join student_course on student.sid=student_course.sid ;")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+        print("++ Show courses in table_course successfully")
+
+    def display_outer_join(self):
+        cur.execute("SELECT student.sid,student.name,student_course.cid FROM student left join student_course on student.sid=student_course.sid ;")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+        print("++ Show courses in table_course successfully")
+
+
+
     def delete_data_into_table_course(self):
         cur.execute("DELETE FROM course WHERE year = 2020;")
         con.commit()
-        print("++ delete data year = 2020 from table course successfully")
+        print("-- delete data year = 2020 from table course successfully")
 
 
     #Procedure with INPUT Parameters
@@ -148,7 +185,20 @@ db.display_courses_in_table_course()
 tm.sleep(1)
 
 db.delete_data_into_table_course()
+tm.sleep(1)
 
+print("** Insert data to student_course and display : ")
+db.insert_data_into_student_course()
+tm.sleep(1)
+
+db.display_student_course_data()
+tm.sleep(1)
+
+print("** display INNER jopin student and cource: ")
+db.display_inner_join()
+
+print("** display OUTER jopin student and cource: ")
+db.display_outer_join()
 
 
 # todo : add data to tables & add some function for SQL commands like SELECT INSERT UPDATE and ...
