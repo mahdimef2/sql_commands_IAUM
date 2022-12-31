@@ -105,14 +105,12 @@ class modify_database:
         rows = cur.fetchall()
         for row in rows:
             print(row)
-        print("++ Show courses in table_course successfully")
 
     def display_outer_join(self):
         cur.execute("SELECT student.sid,student.name,student_course.cid FROM student left join student_course on student.sid=student_course.sid ;")
         rows = cur.fetchall()
         for row in rows:
             print(row)
-        print("++ Show courses in table_course successfully")
 
 
 
