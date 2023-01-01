@@ -120,6 +120,14 @@ class modify_database:
         print("-- delete data year = 2020 from table course successfully")
 
 
+    #create view for select
+    def create_view_for_select(self):
+        cur.execute("CREATE VIEW [Course year] AS SELECT course_name FROM course WHERE year = 2020;")
+        con.commit()
+        print("++ create view for select successfully")
+
+
+
     #Procedure with INPUT Parameters
     """
     def procedure_insert_data_into_table_student(self):
@@ -190,6 +198,9 @@ db.insert_data_into_student_course()
 tm.sleep(1)
 
 db.display_student_course_data()
+tm.sleep(1)
+
+db.create_view_for_select()
 tm.sleep(1)
 
 print("** display INNER jopin student and cource: ")
