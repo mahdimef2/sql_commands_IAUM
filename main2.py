@@ -41,7 +41,7 @@ class modify_database:
         rows = cur.fetchall()
         for row in rows:
             print(row)
-        print("++ Show data into table_student successfully")
+        print("++ Show data table_student successfully")
 
     def update_data_into_table_student(self):
         cur.execute("UPDATE student set name = 'Mahdi' WHERE sid = 100;")
@@ -55,6 +55,8 @@ class modify_database:
         cur.execute("INSERT OR REPLACE INTO student_course(sid, cid) VALUES(106,7000);")
         cur.execute("INSERT OR REPLACE INTO student_course(sid, cid) VALUES(106,5000);")
         con.commit()
+        print("++ insert data into table student_course successfully")
+
 
     def display_student_course_data(self):
         cur.execute("SELECT sid,cid FROM student_course;")
@@ -97,7 +99,7 @@ class modify_database:
         rows = cur.fetchall()
         for row in rows:
             print(row)
-        print("++ Show courses in table_course successfully")
+        print("++ display courses in table_course successfully")
 
 
     def display_inner_join(self):
@@ -106,18 +108,59 @@ class modify_database:
         for row in rows:
             print(row)
 
+        print("++ display INNER join successfully")
+
+
+
     def display_outer_join(self):
         cur.execute("SELECT student.sid,student.name,student_course.cid FROM student left join student_course on student.sid=student_course.sid ;")
         rows = cur.fetchall()
         for row in rows:
             print(row)
 
+        print("++ display OUTER join successfully")
+
+
 
 
     def delete_data_into_table_course(self):
-        cur.execute("DELETE FROM course WHERE year = 2020;")
+        cur.execute("DELETE FROM course WHERE year = 2010;")
         con.commit()
-        print("-- delete data year = 2020 from table course successfully")
+        print("-- delete data year = 2010 from table course successfully")
+
+
+    #create view for select
+    def create_view_for_select(self):
+        cur.execute("CREATE VIEW if not exists Course_year AS SELECT course_name FROM course WHERE year > 2015 ;")
+        con.commit()
+        print("++ create view for select successfully")
+
+
+    #create view for select
+    def display_view1(self):
+        print("++ display view")
+        cur.execute("SELECT * FROM Course_year ;")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+
+
+
+    #create view2 for select
+    def create_view2(self):
+        cur.execute("CREATE VIEW if not exists student_view AS SELECT name,code_meli  FROM student WHERE code_meli > 456625452 ;")
+        con.commit()
+        print("++ create view2 successfully")
+
+
+    #display view2 for 
+    def display_view2(self):
+        print("++ display view2")
+        cur.execute("SELECT * FROM student_view ;")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+
 
 
     #Procedure with INPUT Parameters
@@ -156,47 +199,82 @@ db = modify_database()
 
 db.create_table_student()
 tm.sleep(1)
+print('\n')
 
 db.create_table_course()
 tm.sleep(1)
+print('\n')
 
 db.create_table_student_courses()
 tm.sleep(1)
+print('\n')
 
 db.insert_data_into_table_student()
 tm.sleep(1)
+print('\n')
 
 print("** Display student table information: ")
 db.display_data_into_table_student()
 tm.sleep(1)
+print('\n')
 
 db.update_data_into_table_student()
 tm.sleep(1)
+print('\n')
 
 
 #insert data into table course
 db.insert_data_into_table_course()
 tm.sleep(1)
+print('\n')
 
 print("** Display courses: ")
 db.display_courses_in_table_course()
 tm.sleep(1)
+print('\n')
 
 db.delete_data_into_table_course()
 tm.sleep(1)
+print('\n')
 
 print("** Insert data to student_course and display : ")
 db.insert_data_into_student_course()
 tm.sleep(1)
+print('\n')
 
 db.display_student_course_data()
 tm.sleep(1)
+print('\n')
+
+db.create_view_for_select()
+tm.sleep(1)
+print('\n')
 
 print("** display INNER jopin student and cource: ")
 db.display_inner_join()
+tm.sleep(1)
+print('\n')
 
 print("** display OUTER jopin student and cource: ")
 db.display_outer_join()
+tm.sleep(1)
+print('\n')
 
+
+print("** display view")
+db.display_view1()
+tm.sleep(1)
+print('\n')
+
+
+print("** create view2")
+db.create_view2()
+tm.sleep(1)
+print('\n')
+
+print("** diplay view2")
+db.display_view2()
+tm.sleep(1)
+print('\n')
 
 # todo : add data to tables & add some function for SQL commands like SELECT INSERT UPDATE and ...
